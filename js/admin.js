@@ -60,12 +60,29 @@ function renderC3Title() {
 
   let titleAry = Object.keys(total);
   let newData = [];
+  let sortData = [];
+  let others = ["其他", 0];
+
   titleAry.forEach((item) => {
     let ary = [];
     ary.push(item);
     ary.push(total[item]);
-    newData.push(ary);
+    sortData.push(ary);
   });
+
+  sortData = sortData.sort((a, b) => {
+    return b[1] - a[1];
+  });
+
+  sortData.forEach((item, index) => {
+    if (index < 3) {
+      newData.push(item);
+    } else {
+      others[1] += item[1];
+    }
+  });
+
+  newData.push(others);
 
   let chart = c3.generate({
     bindto: ".chartTitle", // HTML 元素綁定
